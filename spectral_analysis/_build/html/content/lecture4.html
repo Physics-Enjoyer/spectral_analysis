@@ -1,0 +1,891 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Lecture 4 &#8212; Spectral Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecture4';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lecture 5" href="lecture5.html" />
+    <link rel="prev" title="Lecture 3" href="lecture3.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Spectral Analysis</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Spectral Analysis
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lecture1.html">Introduction</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lecture2.html">More special matrices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture3.html">Lecture 3</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lecture 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture5.html">Lecture 5</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Physics-Enjoyer/spectral_analysis" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Physics-Enjoyer/spectral_analysis/issues/new?title=Issue%20on%20page%20%2Fcontent/lecture4.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/lecture4.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lecture 4</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#periodogram-and-correlogram">Periodogram and Correlogram</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-periodogram">The Periodogram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-correlogram">The Correlogram</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#unbiased-estimate">Unbiased Estimate</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#biased-estimate">Biased Estimate</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#unbiased">Unbiased</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#biased">Biased</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-of-biased-and-unbiased-autocorrelations">Expectation of biased and unbiased autocorrelations</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Unbiased</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Biased</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relation-between-periodogram-hat-phi-p-omega-and-correlogram-hat-phi-c-omega">Relation between Periodogram <span class="math notranslate nohighlight">\(\hat{\phi}_p(\omega)\)</span> and Correlogram <span class="math notranslate nohighlight">\(\hat{\phi}_c(\omega)\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#periodogram-compared-to-biased-autocorrelation-hat-r-k">Periodogram compared to biased autocorrelation <span class="math notranslate nohighlight">\(\hat{r}(k)\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectral-resolution">Spectral Resolution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zero-padding">Zero Padding</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-of-the-periodogram">Properties of the Periodogram</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-of-periodogram">Bias of Periodogram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-properties">More Properties</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lecture-4">
+<h1>Lecture 4<a class="headerlink" href="#lecture-4" title="Permalink to this headline">#</a></h1>
+<section id="periodogram-and-correlogram">
+<h2>Periodogram and Correlogram<a class="headerlink" href="#periodogram-and-correlogram" title="Permalink to this headline">#</a></h2>
+<p>The periodogram and correlogram are two methods for finding the spectral content of a signal.</p>
+<section id="the-periodogram">
+<h3>The Periodogram<a class="headerlink" href="#the-periodogram" title="Permalink to this headline">#</a></h3>
+<p>One definition of the <em>true</em> PSD is the following:</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{equation}
+\phi(\omega) = \lim_{N\to\infty}E\{\frac{1}{N} |\sum_{t=1}^{\infty}y(t)e^{-i\omega t}|^2\}
+\end{equation}
+\]</div>
+<p>This is simply the squared modulus of the Fourier Transform of the signal.</p>
+<p>If we have finite sampled data we can rewrite this as</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{equation}
+\hat{\phi_p}(\omega) \frac{1}{N}|\sum_{t=1}^{\N}y(t)e^{-i\omega t}|^2
+\end{equation}
+\]</div>
+<p>Here the <span class="math notranslate nohighlight">\(\hat{}\)</span> represents that <span class="math notranslate nohighlight">\(\phi(\omega)\)</span> is an estimation and the subscript <span class="math notranslate nohighlight">\(p\)</span> says that this is the periodogram. The periodogram is always non-negative and if <span class="math notranslate nohighlight">\(y(t)\)</span> is real than <span class="math notranslate nohighlight">\(\hat{\phi_p}(\omega)\)</span> is even.</p>
+</section>
+<section id="the-correlogram">
+<h3>The Correlogram<a class="headerlink" href="#the-correlogram" title="Permalink to this headline">#</a></h3>
+<p>Another definition of the <em>true</em> PSD is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{equation}
+\hat{\phi_c}(\omega) = \sum_{k=-\infty}^{\infty}r(k)e^{-i\omega k}
+\end{equation}
+\]</div>
+<p>This is the Fourier Transform of the autocorrelation.</p>
+<p>For finite data then we have:</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{equation}
+\hat{\phi_c}(\omega) = \sum_{k=-(N-1)}^{(N-1)}\hat{r}(k)e^{-i\omega k}
+\end{equation}
+\]</div>
+<p>Here the hat on <span class="math notranslate nohighlight">\(\phi\)</span> again means that it is an estimate and the <span class="math notranslate nohighlight">\(c\)</span> in the subscript indicates that it is the correlogram. However notice the hat on the <span class="math notranslate nohighlight">\(\hat{r}(k)\)</span>. This means that the autocorrelation is also an estimate and there are two ways to estimate the autocorrelation, <strong>unbiased</strong> and <strong>biased</strong>. The two methods are described below</p>
+<section id="unbiased-estimate">
+<h4>Unbiased Estimate<a class="headerlink" href="#unbiased-estimate" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[
+\begin{equation}
+\tilde{r}(k) = \frac{1}{N-k}\sum_{t=k+1}^{N}y(t)y^*(t-k)\text{   for   }k\geq 0
+\end{equation}
+\]</div>
+</section>
+<section id="biased-estimate">
+<h4>Biased Estimate<a class="headerlink" href="#biased-estimate" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[
+\begin{equation}
+\hat{r}(k) = \frac{1}{N}\sum_{t=k+1}^{N}y(t)y^*(t-k)\text{  for  }k\geq 0
+\end{equation}
+\]</div>
+<p>This is the definition that must be used for the Correlogram <span class="math notranslate nohighlight">\(\hat{\phi}_C(\omega)\)</span></p>
+<p>Why do we use this for the correlogram?</p>
+<ol class="arabic simple">
+<li><p>Most stationary signals <span class="math notranslate nohighlight">\(\hat{r}(k)\)</span> decays rapidly unlike <span class="math notranslate nohighlight">\(\tilde{r}(k)\)</span></p></li>
+<li><p>And it is always non-negative <span class="math notranslate nohighlight">\(\hat{r}(k) \geq 0 \)</span></p></li>
+</ol>
+</section>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$n$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$y(n)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+</pre></div>
+</div>
+<img alt="../_images/53535452d867d3cf2c4cf3e3a7904669bcdae4846886ee4097aa0376198632ed.png" src="../_images/53535452d867d3cf2c4cf3e3a7904669bcdae4846886ee4097aa0376198632ed.png" />
+</div>
+</div>
+<p>Calculate and plot unbiased and biased autocorrelation</p>
+<section id="unbiased">
+<h4>Unbiased<a class="headerlink" href="#unbiased" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{split}
+\begin{align*}
+&amp; \tilde{r}(0) = \frac{1}{3-0}\sum_{t=1}^{3}y(0)y^*(0) \\\end{split}\\\begin{split}&amp; \tilde{r}(0) = \frac{1}{3}\sum_{t=1}^3(1)(1) = \frac{1}{3}(1 + 1 + 1) = 1 \\\end{split}\\\begin{split}&amp; \tilde{r}(1) = \tilde{r}(-1)= \frac{1}{3-1}\sum_{t=2}^3y(1)y^*(1) \\\end{split}\\\begin{split}&amp; \tilde{r}(1) = \tilde{r}(-1)= \frac{1}{2}\sum_{t=2}^3(1)(1) = \frac{1}{2}(1+1) = 1 \\\end{split}\\\begin{split}&amp; \tilde{r}(2) = \tilde{r}(-2) = \frac{1}{3-2}\sum_{t=3}^{3}(1)(1) = \frac{1}{1}(1) = 1 \\
+\end{align*}
+\end{split}\end{aligned}\end{align} \]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the Autocorrelation and the Transform</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">r</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">11</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>
+<span class="n">freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">r</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">freqs</span><span class="p">,</span><span class="n">phi</span><span class="o">.</span><span class="n">real</span><span class="o">+</span><span class="n">phi</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/63b8f970554bcb7da5ebb0189e2d274813706a92fc92e3cac7427bf9b3632310.png" src="../_images/63b8f970554bcb7da5ebb0189e2d274813706a92fc92e3cac7427bf9b3632310.png" />
+</div>
+</div>
+<p>Notice that the autocorrelation looks like a rectangle function and thus its Fourier Transform is a sinc function and thus in the unbiased case the Fourier Transform of the autocorrelation is not always non-negative.</p>
+</section>
+<section id="biased">
+<h4>Biased<a class="headerlink" href="#biased" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+&amp; \hat{r}(0) = \frac{1}{3}\sum_{t=1}^{3}(1)(1) = \frac{1}{3}(1+1+1) = 1 \\
+&amp; \hat{r}(1) = \hat{r}(-1) = \frac{1}{3}\sum_{t=2}^{3}(1)(1) = \frac{1}{3}(1+1) = \frac{2}{3} \\
+&amp; \hat{r}(2) = \hat{r}(-2) = \frac{1}{3}\sum_{t=3}^{3}(1)(1) = \frac{1}{3}(1) = \frac{1}{3}
+\end{align*}
+\end{split}\]</div>
+<p>Here we can see that the autocorrelation looks like a triangle function which has a Fourier Transform of a <span class="math notranslate nohighlight">\(\text{sinc}^2\)</span> function which <em>is</em> always non-negative as shown below</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Figure out why the FFT of r is not non-negative</span>
+
+<span class="c1"># x = np.arange(-7, 8)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phi</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/book_env/lib/python3.11/site-packages/matplotlib/cbook/__init__.py:1335: ComplexWarning: Casting complex values to real discards the imaginary part
+  return np.asarray(x, float)
+</pre></div>
+</div>
+<img alt="../_images/5b4ab911cabd3f33908250c27843d56ec2c63feaf408d678897a5fc88342635a.png" src="../_images/5b4ab911cabd3f33908250c27843d56ec2c63feaf408d678897a5fc88342635a.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="expectation-of-biased-and-unbiased-autocorrelations">
+<h3>Expectation of biased and unbiased autocorrelations<a class="headerlink" href="#expectation-of-biased-and-unbiased-autocorrelations" title="Permalink to this headline">#</a></h3>
+<section id="id1">
+<h4>Unbiased<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+E\{\tilde{r}(k)\} &amp;= E\{\frac{1}{N-k}\sum_{i=k}^{N-1}x(i)x^*(i)\} \\
+&amp;= E\{x(i)x^*(i-k)\} = r(k) \\
+&amp;= \frac{1}{N-k}\sum_{i=k}^{N-1}r(k) = \frac{1}{N-k}(N-k)r(k) = r(k) \\
+\therefore E\{\tilde{r}(k)\} &amp;= r(k)
+\end{align*}
+\end{split}\]</div>
+</section>
+<section id="id2">
+<h4>Biased<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h4>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+E\{\hat{r}(k)\} &amp;= E\{\frac{1}{N}\sum_{i=k}^{N-1}x(k)x^*(i-k)\} \\
+&amp;= \frac{1}{N}E\{\sum_{i=k}^{N-1}x(k)x^*(i-k)\} \\
+&amp;= \frac{1}{N}\sum_{i=k}^{N-1}r(k) = \frac{1}{N}(N-k)r(k) \\
+\therefore E\{\hat{r}(k)\} &amp;= \frac{N-k}{N}r(k)
+\end{align*}
+\end{split}\]</div>
+<p>Note that as <span class="math notranslate nohighlight">\(N\to\infty\)</span> we have <span class="math notranslate nohighlight">\(E\{\hat{r}(k)\}\to r(k)\)</span></p>
+<p>This means that <span class="math notranslate nohighlight">\(\hat{r}(k)\)</span> is asymptotically unbiased</p>
+</section>
+</section>
+</section>
+<section id="relation-between-periodogram-hat-phi-p-omega-and-correlogram-hat-phi-c-omega">
+<h2>Relation between Periodogram <span class="math notranslate nohighlight">\(\hat{\phi}_p(\omega)\)</span> and Correlogram <span class="math notranslate nohighlight">\(\hat{\phi}_c(\omega)\)</span><a class="headerlink" href="#relation-between-periodogram-hat-phi-p-omega-and-correlogram-hat-phi-c-omega" title="Permalink to this headline">#</a></h2>
+<section id="periodogram-compared-to-biased-autocorrelation-hat-r-k">
+<h3>Periodogram compared to biased autocorrelation <span class="math notranslate nohighlight">\(\hat{r}(k)\)</span><a class="headerlink" href="#periodogram-compared-to-biased-autocorrelation-hat-r-k" title="Permalink to this headline">#</a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\hat{\phi}_p(\omega) &amp;= \frac{1}{N}|\sum_{t=1}^N y(t)e^{-i\omega t}|^2 \\
+&amp;= \sum_{k=-(N-1)}^{N-1}\hat{r}(k)e^{-i\omega k} = \hat{\phi}_c(\omega) \\
+\end{align*}
+\end{split}\]</div>
+<p>Therefore we have that the periodogram is the same as the correlogram using a biased estimator</p>
+<div class="math notranslate nohighlight">
+\[
+\therefore \hat{\phi}_p(\omega) = \hat{\phi}_c(\omega)\text{ with } \hat{r}(k)
+\]</div>
+</section>
+</section>
+<section id="spectral-resolution">
+<h2>Spectral Resolution<a class="headerlink" href="#spectral-resolution" title="Permalink to this headline">#</a></h2>
+<p><em>Spectral</em> means that we are in the frequency domain. The resolution is how fine of details can we make out in the frequency content. Can we tell the difference between <span class="math notranslate nohighlight">\(1Hz\)</span> and <span class="math notranslate nohighlight">\(2Hz\)</span> or <span class="math notranslate nohighlight">\(1Hz\)</span> and <span class="math notranslate nohighlight">\(5Hz\)</span></p>
+<section id="zero-padding">
+<h3>Zero Padding<a class="headerlink" href="#zero-padding" title="Permalink to this headline">#</a></h3>
+<p>zero padding is adding zeros to the end of a dataset. This does not change the data but frequency points in the transform domain are closer together. However there is no new information added and thus <em>the spectral resolution is <strong>not</strong> improved</em></p>
+</section>
+</section>
+<section id="properties-of-the-periodogram">
+<h2>Properties of the Periodogram<a class="headerlink" href="#properties-of-the-periodogram" title="Permalink to this headline">#</a></h2>
+<div class="math notranslate nohighlight">
+\[
+E\{\hat{\phi}_p(\omega)\} = E\{\hat{\phi}_c(\omega)\}
+\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\phi}_p(\omega) \to \phi(\omega) \text{ as } N\to\infty
+\]</div>
+<p>For finite <span class="math notranslate nohighlight">\(N\)</span> we want to estimate a scaler <span class="math notranslate nohighlight">\(a\)</span> such that</p>
+<ol class="arabic simple">
+<li><p>bias <span class="math notranslate nohighlight">\(= E\{\hat{a}\}-a\)</span> is as small as possible</p></li>
+<li><p>the variance <span class="math notranslate nohighlight">\(=E\{(\hat{a}-E\{\hat{a}\})^2\}\)</span></p></li>
+<li><p>measurements are consistent</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{a}\to a\)</span> as <span class="math notranslate nohighlight">\(N\to\infty\)</span></p></li>
+</ul>
+</li>
+</ol>
+<p>If these are not true then we need better measurements</p>
+<section id="bias-of-periodogram">
+<h3>Bias of Periodogram<a class="headerlink" href="#bias-of-periodogram" title="Permalink to this headline">#</a></h3>
+<p>The bias of the periodogram is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+E\{\hat{\phi_p}(\omega)\} = E\{\hat{\phi_c}(\omega)\} &amp;= \sum_{k=-(N-1)}^{N-1}E\{\hat{r}(k)\}e^{-i\omega k} \\
+&amp;= \sum_{k=-(N-1)}^{N-1}[1-\frac{|k|}{N}]r(k)e^{-i\omega k}
+\end{align*}
+\end{split}\]</div>
+<p>Here we notice that <span class="math notranslate nohighlight">\([1-\frac{|k|}{N}]\)</span> is a window on the true autocorrelation <span class="math notranslate nohighlight">\(r(k)\)</span> and we will rewrite this as <span class="math notranslate nohighlight">\(w_B(k)\)</span> so the above equation then becomes</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{k=-(N-1)}^{N-1}w_Br(k)e^{-i\omega k}
+\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+w_B(k) = \begin{cases}
+1-\frac{|k|}{N} &amp; \text{if } |k|\geq N-1 \\
+0 &amp; \text{elsewhere}
+\end{cases}
+\end{split}\]</div>
+</section>
+<section id="more-properties">
+<h3>More Properties<a class="headerlink" href="#more-properties" title="Permalink to this headline">#</a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+E\{\hat{\phi_P}(\omega)\} &amp;= \phi(\omega) * W_B(\omega) \\
+&amp;= \frac{1}{2\pi}\int_{-\pi}^{\pi}\phi(\psi)W_B(\omega - \psi)d\psi
+\end{align*}
+\end{split}\]</div>
+<p>And so the PSD of the window is</p>
+<div class="math notranslate nohighlight">
+\[
+w_B(k) \supset W_B(\omega) = \frac{1}{N}[\frac{\sin(\frac{\omega N}{2})}{\sin(\frac{\omega}{2})}]^2
+\]</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">25</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">bartlett_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">bartlett_window</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">/</span> <span class="n">N</span>
+
+<span class="n">psd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">bartlett_window</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">omega</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">bartlett_window</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Bartlett Window $w_B(k)$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">psd</span><span class="o">/</span><span class="n">psd</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">10e-7</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;$W_B(\omega)/W_B(0)$ for $N=25$&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;$w_b(k) </span><span class="se">\\</span><span class="s2">supset W_B(\omega)$&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/6a7f7e53469fcecef98885f0995c38103fc9c06b305d2dd901a06a66763852ff.png" src="../_images/6a7f7e53469fcecef98885f0995c38103fc9c06b305d2dd901a06a66763852ff.png" />
+</div>
+</div>
+<p>Ideally we want <span class="math notranslate nohighlight">\(W_B(\omega) = \delta(\omega)\)</span> but that is not the case. Why not?</p>
+<p>The main lobe width (<span class="math notranslate nohighlight">\(3dB\)</span> width)</p>
+<ul class="simple">
+<li><p>The Bartlett Window causes smoothing or smearing of the transform</p></li>
+</ul>
+<p>For example the <span class="math notranslate nohighlight">\(3dB\)</span> widths of the Bartlett vs Rectangular windows</p>
+<ul class="simple">
+<li><p>Bartlett <span class="math notranslate nohighlight">\(\propto \frac{1}{N}\)</span></p></li>
+<li><p>Rectangle <span class="math notranslate nohighlight">\(\propto \frac{3}{4}(\frac{1}{N})\)</span></p></li>
+</ul>
+<p>Side Lobe level</p>
+<ul class="simple">
+<li><p>leakage</p></li>
+<li><p>We want the first side lobe height to be as small as possible</p></li>
+<li><p>We want the side lobe roll off to be as fast as possible</p>
+<ul>
+<li><p>The triangle window might be better for this</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lecture3.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lecture 3</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lecture5.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lecture 5</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#periodogram-and-correlogram">Periodogram and Correlogram</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-periodogram">The Periodogram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-correlogram">The Correlogram</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#unbiased-estimate">Unbiased Estimate</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#biased-estimate">Biased Estimate</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#unbiased">Unbiased</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#biased">Biased</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expectation-of-biased-and-unbiased-autocorrelations">Expectation of biased and unbiased autocorrelations</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Unbiased</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Biased</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relation-between-periodogram-hat-phi-p-omega-and-correlogram-hat-phi-c-omega">Relation between Periodogram <span class="math notranslate nohighlight">\(\hat{\phi}_p(\omega)\)</span> and Correlogram <span class="math notranslate nohighlight">\(\hat{\phi}_c(\omega)\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#periodogram-compared-to-biased-autocorrelation-hat-r-k">Periodogram compared to biased autocorrelation <span class="math notranslate nohighlight">\(\hat{r}(k)\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectral-resolution">Spectral Resolution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#zero-padding">Zero Padding</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-of-the-periodogram">Properties of the Periodogram</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-of-periodogram">Bias of Periodogram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#more-properties">More Properties</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Physics Enjoyer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

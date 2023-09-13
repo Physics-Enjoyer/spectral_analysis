@@ -1,0 +1,911 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Introduction &#8212; Spectral Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecture1';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="More special matrices" href="lecture2.html" />
+    <link rel="prev" title="Spectral Analysis" href="../intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Spectral Analysis</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Spectral Analysis
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lecture2.html">More special matrices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture3.html">Lecture 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture4.html">Lecture 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture5.html">Lecture 5</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Physics-Enjoyer/spectral_analysis" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Physics-Enjoyer/spectral_analysis/issues/new?title=Issue%20on%20page%20%2Fcontent/lecture1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/lecture1.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectral-estimation">Spectral Estimation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#issues-with-spectral-estimation">Issues with Spectral Estimation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-review">Matrix Review</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-arithmetic">Matrix Arithmetic</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-addition">Matrix Addition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scaler-multiplication">Scaler Multiplication</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-multiplication">Matrix Multiplication</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transpose-of-a-matrix">Transpose of a Matrix</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transpose-arithmetic">Transpose Arithmetic</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complex-conjugate">Complex Conjugate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hermitian-conjugate">Hermitian Conjugate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inverse-matrix">Inverse Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unitary-matrix">Unitary Matrix</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#vectors">Vectors</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inner-product">Inner product</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outer-product">Outer Product</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#special-matrices-and-vectors">Special Matrices and Vectors</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-zero-vector">The Zero Vector</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagonal-of-a-matrix">Diagonal of a Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symmetric-matrix">Symmetric Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reversal-or-reflection-or-exchange-matrix">Reversal or Reflection or Exchange Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#toeplitz-matrix">Toeplitz Matrix</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h1>
+<div class="cell tag_hide-input tag_remove-output docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary modules</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Math</span>
+<span class="c1">#set plot resolution</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+<span class="c1"># Gets rid of transparent border around images</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+<span class="c1"># set default colormap</span>
+<span class="n">default_cmap</span> <span class="o">=</span> <span class="s1">&#39;jet&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">default_cmap</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<section id="spectral-estimation">
+<h2>Spectral Estimation<a class="headerlink" href="#spectral-estimation" title="Permalink to this headline">#</a></h2>
+<p>What is the <em>resolution</em> of data?</p>
+<p>In the ideal case discrete data has infinite precision and equal time spacing</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Amplitude&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/0c10bd6998e0866d7f73b317c617f383db8ae996c7e6fd704b9e2a6d86194751.png" src="../_images/0c10bd6998e0866d7f73b317c617f383db8ae996c7e6fd704b9e2a6d86194751.png" />
+</div>
+</div>
+<p>In reality data does not have infinite precision and the data should have error bars around it to show a certain amount of uncertainty in the data</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Amplitude&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/994230562f5f76b58f9edd4ed7fa8f9fcbf8ceab25f56d10930c4f2f3d1d8681.png" src="../_images/994230562f5f76b58f9edd4ed7fa8f9fcbf8ceab25f56d10930c4f2f3d1d8681.png" />
+</div>
+</div>
+<p>The data could be real or complex</p>
+<section id="issues-with-spectral-estimation">
+<h3>Issues with Spectral Estimation<a class="headerlink" href="#issues-with-spectral-estimation" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Frequency Resolution</p></li>
+<li><p>Signal detectable</p></li>
+<li><p>True spectral shapes</p></li>
+<li><p>Stability</p></li>
+</ul>
+<p>In order to get an accurate picture we take multiple measurements</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;x1.npy&quot;</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;x2.npy&quot;</span><span class="p">)</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;x3.npy&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Dataset 1&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Dataset 2&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Dataset 3&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/1edbd51af6aedad893c14c0265901d23576285cddc4c5c9ff8601b3858369618.png" src="../_images/1edbd51af6aedad893c14c0265901d23576285cddc4c5c9ff8601b3858369618.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">t</span><span class="p">))</span><span class="o">/</span><span class="mi">15</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">t</span><span class="p">))</span><span class="o">/</span><span class="mi">15</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">t</span><span class="p">))</span><span class="o">/</span><span class="mi">15</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">x3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/163ba736a55fbd78a9cc1ce2091d59f8a5a4159d22c7d8232527635347874e44.png" src="../_images/163ba736a55fbd78a9cc1ce2091d59f8a5a4159d22c7d8232527635347874e44.png" />
+</div>
+</div>
+<p>Here notice that between 0 and 2 the values agree pretty closely but they diverge as t goes on so we instead must use some statistics to describe the phenomenon</p>
+<p><strong>Statistics</strong> uses various quantities such as the <em>mean</em>, <em>variance</em>, <em>skewness</em> and <em>kurtosis</em>. The question we need to ask then is; are these quantities stationary over time?</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="matrix-review">
+<h1>Matrix Review<a class="headerlink" href="#matrix-review" title="Permalink to this headline">#</a></h1>
+<p>(Stoica &amp; Mosis Appendix A p. 342; Marple Ch.3 p. 57-92)</p>
+<p>given a matrix <span class="math notranslate nohighlight">\(\textbf{A}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\textbf{A} = \begin{pmatrix}
+a(1,1) &amp; a(1,2) &amp; \cdots &amp; a(1,n) \\
+a(2,1) &amp; a(2,2) &amp; \cdots &amp; a(2,n) \\
+\vdots &amp; &amp; \ddots  &amp; \\
+a(m,1) &amp; a(m,2) &amp; \cdots &amp; a(m,n)
+\end{pmatrix}
+\end{split}\]</div>
+<p>This is a <span class="math notranslate nohighlight">\(m\times n\)</span> matrix and the elements <span class="math notranslate nohighlight">\(a(i,j)\)</span> can be real or complex valued</p>
+<p>A <strong>row vector</strong> in the form <span class="math notranslate nohighlight">\(b = (b(0), b(1), b(2), \cdots ,b(n))\)</span> is a <span class="math notranslate nohighlight">\(1\times n\)</span> matrix</p>
+<p>A <strong>column vector</strong> in the form <span class="math notranslate nohighlight">\(c = \begin{pmatrix} c(1) \\ c(2) \\ \vdots \\ c(m) \end{pmatrix}\)</span> is a <span class="math notranslate nohighlight">\(m\times 1\)</span> matrix</p>
+<p>The <strong>rank</strong> of a matrix <!--- TODO: Figure out what she means here. Or figure out what the rank of a matrix means. --> = independence of columns or rows.</p>
+<section id="matrix-arithmetic">
+<h2>Matrix Arithmetic<a class="headerlink" href="#matrix-arithmetic" title="Permalink to this headline">#</a></h2>
+<p>Matrices can be added together, multiplied by a scaler, or multiplied by another matrix.</p>
+<section id="matrix-addition">
+<h3>Matrix Addition<a class="headerlink" href="#matrix-addition" title="Permalink to this headline">#</a></h3>
+<p>Matrices can only be added together if they have the same shape</p>
+<p>To add matrices together add the corresponding elements <span class="math notranslate nohighlight">\(\bf{C_{i,j}} = \bf{A_{i,j}} + \bf{B_{i,j}}\)</span></p>
+</section>
+<section id="scaler-multiplication">
+<h3>Scaler Multiplication<a class="headerlink" href="#scaler-multiplication" title="Permalink to this headline">#</a></h3>
+<p>To multiply a matrix by a scaler quantity <span class="math notranslate nohighlight">\(\alpha\)</span> multiply each element of the matrix by the scaler.</p>
+<p><span class="math notranslate nohighlight">\(\textbf{C} = \alpha\textbf{A}\)</span></p>
+</section>
+<section id="matrix-multiplication">
+<h3>Matrix Multiplication<a class="headerlink" href="#matrix-multiplication" title="Permalink to this headline">#</a></h3>
+<p>Matrices can only be multiplied together if matrix <span class="math notranslate nohighlight">\(\textbf{A}\)</span> has the same number columns as the number of rows in matrix <span class="math notranslate nohighlight">\(\textbf{B}\)</span>. In other words a <span class="math notranslate nohighlight">\(m\times n\)</span> matrix can only be multiplied by a <span class="math notranslate nohighlight">\(n\times p\)</span> matrix.</p>
+<p>Matrix multiplication is <em>associative</em></p>
+<p><span class="math notranslate nohighlight">\(\textbf{ABC} = \textbf{(AB)C} = \textbf{A(BC)}\)</span></p>
+<p>Matrix multiplication is <strong><em>NOT</em></strong> commutative though.</p>
+<p><span class="math notranslate nohighlight">\(\textbf{AB} \neq \textbf{BA}\)</span></p>
+</section>
+</section>
+<section id="transpose-of-a-matrix">
+<h2>Transpose of a Matrix<a class="headerlink" href="#transpose-of-a-matrix" title="Permalink to this headline">#</a></h2>
+<p>The transpose of a matrix <span class="math notranslate nohighlight">\(\textbf{A}^T\)</span> is when you swap the rows and columns.</p>
+<p><span class="math notranslate nohighlight">\(\textbf{A}_{i,j}^T = \textbf{A}_{j,i}\)</span></p>
+<section id="transpose-arithmetic">
+<h3>Transpose Arithmetic<a class="headerlink" href="#transpose-arithmetic" title="Permalink to this headline">#</a></h3>
+<p><span class="math notranslate nohighlight">\((\textbf{A+B})^T = \textbf{A}^T = \textbf{B}^T\)</span></p>
+<p><span class="math notranslate nohighlight">\((\textbf{AB})^T = \textbf{B}^T\textbf{A}^T\)</span></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The order of multiplication reverses. Remember that matrix multiplication is not commutative so this is very important!</p>
+</div>
+</section>
+</section>
+<section id="complex-conjugate">
+<h2>Complex Conjugate<a class="headerlink" href="#complex-conjugate" title="Permalink to this headline">#</a></h2>
+<p>The complex conjugate of a matrix <span class="math notranslate nohighlight">\(\textbf{A}\)</span> is denoted by <span class="math notranslate nohighlight">\(\textbf{A}^*\)</span> and every entry of the matrix is replaced by its complex conjugate</p>
+</section>
+<section id="hermitian-conjugate">
+<h2>Hermitian Conjugate<a class="headerlink" href="#hermitian-conjugate" title="Permalink to this headline">#</a></h2>
+<p>The Hermitian Conjugate of a matrix <span class="math notranslate nohighlight">\(\textbf{A}^H\)</span> is defined as the complex conjugate of the transpose, or the transpose of the complex conjugate.</p>
+<p><span class="math notranslate nohighlight">\(\textbf{A}^H \equiv (\textbf{A}^*)^T = (\textbf{A}^T)^*\)</span></p>
+</section>
+<section id="inverse-matrix">
+<h2>Inverse Matrix<a class="headerlink" href="#inverse-matrix" title="Permalink to this headline">#</a></h2>
+<p>The inverse of a matrix <span class="math notranslate nohighlight">\(\bf{A}^{-1}\)</span> is the matrix that when multiplied by <span class="math notranslate nohighlight">\(\bf{A}\)</span> is equal to the identity matrix <span class="math notranslate nohighlight">\(\bf{I}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\bf{AA^{-1}} = \bf{A^{-1}A} = \bf{I}\)</span></p>
+<p>The identity matrix <span class="math notranslate nohighlight">\(\textbf{I}\)</span> is defined as</p>
+<p><span class="math notranslate nohighlight">\(\textbf{I} = \begin{pmatrix}
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 1 \\
+\end{pmatrix}\)</span></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><span class="math notranslate nohighlight">\(\textbf{I} is always a square matrix but \)</span>\textbf{A}<span class="math notranslate nohighlight">\( and \)</span>\textbf{A}^{-1}$ are not necessarily square</p>
+</div>
+</section>
+<section id="unitary-matrix">
+<h2>Unitary Matrix<a class="headerlink" href="#unitary-matrix" title="Permalink to this headline">#</a></h2>
+<p>A matrix is <strong>unitary</strong> if <span class="math notranslate nohighlight">\(\textbf{A}^{-1} = \textbf{A}^H\)</span></p>
+<p><span class="math notranslate nohighlight">\((\textbf{A}+\textbf{B})^H = \textbf{A}^H + \textbf{B}^H\)</span></p>
+<p><span class="math notranslate nohighlight">\((\textbf{AB})^H = \textbf{B}^H\textbf{A}^H\)</span></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Again take note of the order</p>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="vectors">
+<h1>Vectors<a class="headerlink" href="#vectors" title="Permalink to this headline">#</a></h1>
+<p>Consider 2 vectors</p>
+<p><span class="math notranslate nohighlight">\(\vec{w} = \begin{pmatrix} 
+w(1) \\
+w(2) \\ 
+\vdots \\
+w(n)
+\end{pmatrix}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\vec{v} = \begin{pmatrix}
+v(1) \\
+v(2) \\
+\vdots \\
+v(n)
+\end{pmatrix}\)</span></p>
+<p>There are two ways to multiply these two vectors the <strong>inner product</strong> and the <strong>outer product</strong></p>
+<section id="inner-product">
+<h2>Inner product<a class="headerlink" href="#inner-product" title="Permalink to this headline">#</a></h2>
+<p>The inner product notated <span class="math notranslate nohighlight">\(\braket{w , v}\)</span> and is calculated as a sum:</p>
+<p><span class="math notranslate nohighlight">\(\sum_{j=1}^nw^*(j)v(j) = w^Hv\)</span></p>
+<p>The inner product takes in two vectors of the same size and produces a scaler as an output</p>
+</section>
+<section id="outer-product">
+<h2>Outer Product<a class="headerlink" href="#outer-product" title="Permalink to this headline">#</a></h2>
+<p>The outer product, similar to the inner product takes 2 vectors of the same size as an input but instead of returning a scaler it returns a matrix.</p>
+<p><span class="math notranslate nohighlight">\(wv^H = \begin{pmatrix}
+w_1v_1^* &amp; w_1v_2^* &amp; \cdots &amp; w_1v_n^* \\
+w_2v_1^* &amp; w_2v_2^* &amp; \cdots &amp; w_2v_n^*  \\
+\vdots &amp; \ddots &amp; \ddots &amp; \vdots \\
+w_nv_1^* &amp; w_nv_2^* &amp; \cdots &amp; w_nv_m^*
+\end{pmatrix}\)</span></p>
+<p>In vector multiplication form this is</p>
+<p><span class="math notranslate nohighlight">\(wv^H = \begin{pmatrix}
+w_1 \\ w_2, \\ \vdots \\ w_n
+\end{pmatrix} (v_1, v_2, \cdots, v_m)\)</span></p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="special-matrices-and-vectors">
+<h1>Special Matrices and Vectors<a class="headerlink" href="#special-matrices-and-vectors" title="Permalink to this headline">#</a></h1>
+<p>First we will assume that the sampling interval is 1, that is <span class="math notranslate nohighlight">\(\Delta t = 1\)</span></p>
+<section id="the-zero-vector">
+<h2>The Zero Vector<a class="headerlink" href="#the-zero-vector" title="Permalink to this headline">#</a></h2>
+<p>The zero vector is just a vector in which every element is zero</p>
+<p><span class="math notranslate nohighlight">\(\textbf{0} = \begin{pmatrix}
+0 \\
+0 \\
+\vdots \\
+0
+\end{pmatrix}\)</span></p>
+<p>The <span class="math notranslate nohighlight">\(\textbf{e}\)</span> vector is the vector in which every element is <span class="math notranslate nohighlight">\(e^{-i\omega n}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\textbf{e} = \begin{pmatrix}
+1 \\
+e^{-i\omega} \\
+e^{-i2\omega} \\
+e^{-i3\omega} \\
+\vdots \\
+e^{-in\omega}
+\end{pmatrix}\)</span></p>
+<p>An example of the use of the <span class="math notranslate nohighlight">\(\textbf{e}\)</span> matrix is the Discrete Fourier Transform.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+x(t) \supset X(\omega) = \begin{pmatrix}
+1 \\
+e^{-i\omega} \\
+e^{-i2\omega} \\
+\vdots \\
+e^{-in\omega}
+\end{pmatrix}
+\begin{pmatrix}
+x(0) \\
+x(1) \\
+x(2) \\
+\vdots \\
+x(n)
+\end{pmatrix}
+\end{split}\]</div>
+</section>
+<section id="diagonal-of-a-matrix">
+<h2>Diagonal of a Matrix<a class="headerlink" href="#diagonal-of-a-matrix" title="Permalink to this headline">#</a></h2>
+<p>The diagonal of a matrix is simply the entries along the diagonal starting from the top left (The <span class="math notranslate nohighlight">\(a(0,0)\)</span> position) and goes diagonally to the bottom right (the <span class="math notranslate nohighlight">\(a(n,n)\)</span> position)</p>
+<p>A <strong>diagonal</strong> matrix is one with zeros everywhere except on the main diagonal.</p>
+<p>Anti-diagonal is starting from the bottom left and going to the top right.</p>
+</section>
+<section id="symmetric-matrix">
+<h2>Symmetric Matrix<a class="headerlink" href="#symmetric-matrix" title="Permalink to this headline">#</a></h2>
+<p>A symmetric matrix is is one in which <span class="math notranslate nohighlight">\(S^T = S\)</span> that is the matrix is its own transpose.</p>
+</section>
+<section id="reversal-or-reflection-or-exchange-matrix">
+<h2>Reversal or Reflection or Exchange Matrix<a class="headerlink" href="#reversal-or-reflection-or-exchange-matrix" title="Permalink to this headline">#</a></h2>
+<p>The reversal matrix is the anti-diagonal identity matrix.</p>
+<p><span class="math notranslate nohighlight">\(\textbf{J}_{3\times 3} = \begin{pmatrix}
+0 &amp; 0 &amp; 1 \\ 
+0 &amp; 1 &amp; 0 \\
+1 &amp; 0 &amp; 0 
+\end{pmatrix}\)</span></p>
+<p>Multiplying this matrix by a matrix <span class="math notranslate nohighlight">\(\textbf{A}\)</span> results in the following:</p>
+<p><span class="math notranslate nohighlight">\(\textbf{J}_m\textbf{A} = \begin{pmatrix}
+a(m,1) &amp; a(m, 2) &amp; \cdots &amp; a(m,n) \\
+a(m-1, 1) &amp;a(m-1, 2) &amp; \cdots &amp; a(m-1, n) \\
+\vdots &amp; \ddots &amp; \ddots &amp; \vdots \\
+a(1,1) &amp; a(1, 2) &amp; \cdots &amp; a(1, n)
+\end{pmatrix}\)</span></p>
+<p>Whereas reversing the order of multiplication results in:</p>
+<p><span class="math notranslate nohighlight">\(\textbf{A}\textbf{J}_m = \begin{pmatrix}
+a(1,n) &amp; a(1,n-1) &amp; \cdots &amp; a(1,1) \\
+a(2,n) &amp; a(2,n-1) &amp; \cdots &amp; a(2,1) \\
+\vdots &amp; \ddots &amp; \ddots &amp; \vdots \\
+a(m,n) &amp; a(m,n-1) &amp; \cdots &amp; a(m,1)
+\end{pmatrix}\)</span></p>
+</section>
+<section id="toeplitz-matrix">
+<h2>Toeplitz Matrix<a class="headerlink" href="#toeplitz-matrix" title="Permalink to this headline">#</a></h2>
+<p>A Toeplitz matrix is one that is constructed from a single vector and has the form:</p>
+<p><span class="math notranslate nohighlight">\(\textbf{T} = \begin{pmatrix}
+t(1) &amp; t(2) &amp; \cdots &amp; t(n) \\
+t(-1) &amp; t(1) &amp; \cdots &amp; t(n-1) \\
+t(-2) &amp; t(-1) &amp; \cdots &amp; t(n-2) \\
+\vdots &amp; \ddots &amp; \ddots &amp; \vdots \\
+t(n) &amp; t(n-1) &amp; \cdots &amp; t(1) 
+\end{pmatrix}\)</span></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Spectral Analysis</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lecture2.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">More special matrices</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectral-estimation">Spectral Estimation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#issues-with-spectral-estimation">Issues with Spectral Estimation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-review">Matrix Review</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-arithmetic">Matrix Arithmetic</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-addition">Matrix Addition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scaler-multiplication">Scaler Multiplication</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-multiplication">Matrix Multiplication</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transpose-of-a-matrix">Transpose of a Matrix</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transpose-arithmetic">Transpose Arithmetic</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complex-conjugate">Complex Conjugate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hermitian-conjugate">Hermitian Conjugate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inverse-matrix">Inverse Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unitary-matrix">Unitary Matrix</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#vectors">Vectors</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inner-product">Inner product</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#outer-product">Outer Product</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#special-matrices-and-vectors">Special Matrices and Vectors</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-zero-vector">The Zero Vector</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diagonal-of-a-matrix">Diagonal of a Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symmetric-matrix">Symmetric Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reversal-or-reflection-or-exchange-matrix">Reversal or Reflection or Exchange Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#toeplitz-matrix">Toeplitz Matrix</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Physics Enjoyer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

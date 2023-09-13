@@ -6,7 +6,7 @@ title: Spectral Analysis
 author: Physics Enjoyer
 copyright: "2023"
 # logo: 
-exclude_patterns            : ["*.npy", _build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints", "./homework/*"]
+exclude_patterns            : ["*.npy", _build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints", "./homework/**"]
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
