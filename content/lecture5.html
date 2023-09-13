@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>More special matrices &#8212; Spectral Analysis</title>
+    <title>Lecture 5 &#8212; Spectral Analysis</title>
   
   
   
@@ -62,11 +62,11 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecture_2';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/lecture5';</script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Introduction" href="lecture_1.html" />
+    <link rel="prev" title="Lecture 4" href="lecture4.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -152,11 +152,14 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="lecture_1.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture1.html">Introduction</a></li>
 
 
 
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">More special matrices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture2.html">More special matrices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture3.html">Lecture 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lecture4.html">Lecture 4</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lecture 5</a></li>
 </ul>
 
     </div>
@@ -228,7 +231,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/Physics-Enjoyer/spectral_analysis/issues/new?title=Issue%20on%20page%20%2Fcontent/lecture_2.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/Physics-Enjoyer/spectral_analysis/issues/new?title=Issue%20on%20page%20%2Fcontent/lecture5.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -258,7 +261,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/content/lecture_2.ipynb" target="_blank"
+      <li><a href="../_sources/content/lecture5.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -340,7 +343,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>More special matrices</h1>
+    <h1>Lecture 5</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -350,18 +353,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hankel-matrix">Hankel Matrix</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shift-matrix">Shift Matrix</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#triangular-matrices">Triangular Matrices</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#upper-triangular-matrix">Upper Triangular Matrix</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lower-triangular-matrix">Lower Triangular Matrix</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-inversion">Matrix Inversion</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-matrix-inversion-lemma">The Matrix Inversion Lemma</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-matrix-equations">Linear Matrix Equations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-definitions">Some Definitions</a></li>
 </ul>
             </nav>
         </div>
@@ -373,108 +365,19 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="more-special-matrices">
-<h1>More special matrices<a class="headerlink" href="#more-special-matrices" title="Permalink to this headline">#</a></h1>
-<div class="cell tag_remove-output tag_hide-input docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<section id="hankel-matrix">
-<h2>Hankel Matrix<a class="headerlink" href="#hankel-matrix" title="Permalink to this headline">#</a></h2>
-<p>The Hankel matrix is sort of the opposite of a Toeplitz matrix. The “origin” element is goes anti-diagonally</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="lecture-5">
+<h1>Lecture 5<a class="headerlink" href="#lecture-5" title="Permalink to this headline">#</a></h1>
+<section id="some-definitions">
+<h2>Some Definitions<a class="headerlink" href="#some-definitions" title="Permalink to this headline">#</a></h2>
+<p>If the input is complex Gaussian white noise then</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\bf{H} = \begin{pmatrix}
-h(n-1) &amp; h(n-2) &amp; \cdots &amp; h(1) &amp; h(0) \\
-h(n-2) &amp; h(n-1) &amp; \cdots &amp; h(0) &amp; h(-1) \\
-h(n-3) &amp; h(n-2) &amp; \cdots &amp; h(-1) &amp; h(-2) \\
-\vdots &amp; \ddots &amp; \ddots &amp; \ddots &amp; \vdots \\
-h(0) &amp; h(-1) &amp; \cdots &amp; h(1-n) &amp; h(-n) \\
-\end{pmatrix}
-\end{split}\]</div>
-</section>
-<section id="shift-matrix">
-<h2>Shift Matrix<a class="headerlink" href="#shift-matrix" title="Permalink to this headline">#</a></h2>
-<p>the shift matrix is the identity matrix with each element shifted to the right</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\bf{S} = \begin{pmatrix}
-0 &amp; 1 &amp; 0 &amp; \cdots &amp; 0 \\
-0 &amp; 0 &amp; 1 &amp; \cdots &amp; 0 \\
-\vdots &amp; \ddots &amp; \ddots &amp; \ddots &amp; \vdots \\
-1 &amp; 0 &amp; 0 &amp; \cdots &amp; 0
-\end{pmatrix}
-\end{split}\]</div>
-</section>
-<section id="triangular-matrices">
-<h2>Triangular Matrices<a class="headerlink" href="#triangular-matrices" title="Permalink to this headline">#</a></h2>
-<p>There are 2 types of triangular matrices <strong>Upper Traingular</strong> and <strong>Lower Traingular</strong>.</p>
-<section id="upper-triangular-matrix">
-<h3>Upper Triangular Matrix<a class="headerlink" href="#upper-triangular-matrix" title="Permalink to this headline">#</a></h3>
-<p>The upper triangular matrix has all values below the diagonal as zero</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\bf{U} = \begin{pmatrix}
-U_{1,1} &amp; U_{1,2} &amp; \cdots &amp; U_{1,n} \\
-0 &amp; U_{2,2} &amp; \cdots &amp; U_{2,n} \\
-\vdots &amp; \ddots &amp; \ddots &amp; \vdots \\
-0 &amp; 0 &amp; \cdots &amp; U_{n,n}
-\end{pmatrix}
-\end{split}\]</div>
-</section>
-<section id="lower-triangular-matrix">
-<h3>Lower Triangular Matrix<a class="headerlink" href="#lower-triangular-matrix" title="Permalink to this headline">#</a></h3>
-<p>The lower triangular matrix has all values above the diagonal as zero</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\bf{L} = \begin{pmatrix}
-L_{1,1} &amp; 0 &amp; \cdots &amp; 0 \\
-L_{2,1} &amp; L_{2,2} &amp; \cdots &amp; 0 \\
-L_{3,1} &amp; L_{3,2} &amp; \cdots &amp; 0 \\
-\vdots &amp; \ddots &amp; \ddots &amp; \vdots \\
-L_{n,1} &amp; L_{n,2} &amp; \cdots &amp; L_{n,n}
-\end{pmatrix}
-\end{split}\]</div>
-</section>
-</section>
-<section id="matrix-inversion">
-<h2>Matrix Inversion<a class="headerlink" href="#matrix-inversion" title="Permalink to this headline">#</a></h2>
-<p>Assume a square matrix <span class="math notranslate nohighlight">\(\bf{A_{n \times n}}\)</span>. The inverse of <span class="math notranslate nohighlight">\(\bf{A}\)</span> is denoted by <span class="math notranslate nohighlight">\(\bf{A}^{-1}\)</span> and is the unique matrix such that</p>
-<div class="math notranslate nohighlight">
-\[\bf{A}\bf{A}^{-1} = \bf{A}^{-1}\bf{A} = \bf{I}\]</div>
-<p>Where <span class="math notranslate nohighlight">\(\bf{I}\)</span> is the <em>identity matrix</em> and the determinant <span class="math notranslate nohighlight">\(\det (\bf{A}) \neq 0\)</span></p>
-<p>If <span class="math notranslate nohighlight">\(\bf{A}\)</span> is a Hermitian matrix than the determinant is real <span class="math notranslate nohighlight">\(\det (\bf{A}) \in \mathbb{R}\)</span></p>
-<section id="the-matrix-inversion-lemma">
-<h3>The Matrix Inversion Lemma<a class="headerlink" href="#the-matrix-inversion-lemma" title="Permalink to this headline">#</a></h3>
-<p>(p. 363 in Stoica &amp; Moses; p. 68 Marple)</p>
-<!-- TODO: Look up the definition here in Stoica & Moses as well as Marple -->
-<p>We augment a matrix such that</p>
-<div class="math notranslate nohighlight">
-\[\bf{A} + \bf{BCD}\]</div>
-<div class="math notranslate nohighlight">
-\[(\bf{A} +\bf{BCD})^{-1} = \bf{A}^{-1} - \bf{A^{-1}B(DA^{-1}B+C^{-1})^{-1}DA^{-1}}\]</div>
-</section>
-</section>
-<section id="linear-matrix-equations">
-<h2>Linear Matrix Equations<a class="headerlink" href="#linear-matrix-equations" title="Permalink to this headline">#</a></h2>
-<div class="math notranslate nohighlight">
-\[
-\bf{A}_{n \times m}\vec{x}_{n\times 1} = \vec{b}_{n\times 1}
-\]</div>
-<p>In this equation <span class="math notranslate nohighlight">\(\vec{x}\)</span> is unknown. Solving for <span class="math notranslate nohighlight">\(\vec{x}\)</span> yeilds</p>
-<p><span class="math notranslate nohighlight">\(\vec{x} = \bf{A}^{-1}\vec{b}\)</span></p>
-<p>So in order to solve for <span class="math notranslate nohighlight">\(\vec{x}\)</span> we need to find <span class="math notranslate nohighlight">\(\bf{A}^{-1}\)</span></p>
-<p>We can use <strong>back substitution</strong></p>
+E\{x(n)x^*(k)\} = \sigma^2\delta(n-k) \\
+\\
+E\{x(n)x(k)\} = 0 \text{ for all } n,k \\
+E\{\text{Re} x(n) \text{Re} x(k)\} = \frac{\sigma^2}{2}\delta(n-k) \\
+E\{\text{Im} x(n) \text{Im} x(k)\} = \frac{\sigma^2}{2}\delta(n-k) \\
+E\{\text{Re} x(n) \text{Im} x(k)\} = 0 \\\end{split}\]</div>
 </section>
 </section>
 
@@ -510,12 +413,12 @@ L_{n,1} &amp; L_{n,2} &amp; \cdots &amp; L_{n,n}
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="lecture_1.html"
+       href="lecture4.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Introduction</p>
+        <p class="prev-next-title">Lecture 4</p>
       </div>
     </a>
 </div></div>
@@ -536,18 +439,7 @@ L_{n,1} &amp; L_{n,2} &amp; \cdots &amp; L_{n,n}
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hankel-matrix">Hankel Matrix</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shift-matrix">Shift Matrix</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#triangular-matrices">Triangular Matrices</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#upper-triangular-matrix">Upper Triangular Matrix</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lower-triangular-matrix">Lower Triangular Matrix</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-inversion">Matrix Inversion</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-matrix-inversion-lemma">The Matrix Inversion Lemma</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-matrix-equations">Linear Matrix Equations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-definitions">Some Definitions</a></li>
 </ul>
   </nav></div>
 
@@ -571,7 +463,7 @@ By Physics Enjoyer
     
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>
