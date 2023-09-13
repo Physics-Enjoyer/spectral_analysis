@@ -39,3 +39,4 @@ db.sqlite3
 # Tex
 *.aux
 *.gz
+spectral_analysis/homework/*
